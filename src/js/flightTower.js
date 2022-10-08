@@ -20,10 +20,15 @@ export default class FlightTower {
         for (let flightData of flightsData.flights) {
             let flight = new Flight({ number: flightData.number, origin: flightData.origin, destination: flightData.destination })
             flight.depart()
-            flight.on('arrive', (event) => {
+            flight.on('depart', (event => {
+                this.flightBoard.displayDepartures(this.departedCount)
                 this.flightBoard.postFlight(event)
-
-                this.flightBoard.displayFlightCount(this.arrivedCount)
+                // this.flightBoard.updateFlight(event)
+            }))
+            flight.on('arrive', (event) => {
+                // this.flightBoard.postFlight(event)
+                this.flightBoard.displayArrivals(this.arrivedCount)
+                this.flightBoard.updateFlight(event)
             })
             this.flights.push(flight)  
         }
@@ -35,8 +40,11 @@ export default class FlightTower {
     }
 
     get arrivedCount() {
-        console.log('arrived', this.flights.filter(flight => flight.hasArrived()).length)
         return this.flights.filter(flight => flight.hasArrived()).length
+    }
+
+    get departedCount() {
+        return this.flights.filter(flight => flight.hasDeparted()).length
     }
 
 

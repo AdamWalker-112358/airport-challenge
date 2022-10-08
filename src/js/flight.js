@@ -44,6 +44,7 @@ export default class Flight extends EventEmitter  {
     depart() {
         setTimeout(() => {
             this.#departed = dayjs().format("DD/MM/YYYY, HH:mm:ss");
+            this.emit('depart', {number: this.number,origin: this.origin, destination: this.destination, departed: this.#departed, arrived: 'In Flight'})
             setTimeout(() => {
                 this.#arrive();
             }, Math.random() * 8000 + 5000)
@@ -58,6 +59,10 @@ export default class Flight extends EventEmitter  {
 
     hasArrived() {
         return !!this.#arrived;
+    }
+
+    hasDeparted() {
+        return !!this.#departed;
     }
 
 

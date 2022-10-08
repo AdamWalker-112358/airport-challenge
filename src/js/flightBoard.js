@@ -12,7 +12,7 @@ export default class FlightBoard {
         this.flightBoard.append(this.flightTable);
   
         this.flightBoardHeader = document.createElement('tr')
-        this.flightBoardHeader.innerHTML = `<th>Origin</th><th>Destination</th><th>Departed</th><th>Arrived</th>`
+        this.flightBoardHeader.innerHTML = `<th class="id">ID</th><th class="origin">Origin</th><th class="destination">Destination</th><th class="departed">Departed</th><th class="arrived">Arrived</th>`
         this.flightTable.append(this.flightBoardHeader);
 
     }
@@ -20,19 +20,41 @@ export default class FlightBoard {
     postFlight = (flight)=> {
         let flightRow = document.createElement('tr');
         let flightRowHTML = `
+            <td>${flight.number}</td>
             <td>${flight.origin}</td>
             <td>${flight.destination}</td>
             <td>${flight.departed}</td>
-            <td>${flight.arrived}</td>
+            <td class="has-not-arrived">${flight.arrived}</td>
         `
         flightRow.innerHTML = flightRowHTML;   
         this.flightTable.append(flightRow);
 
     }
 
-    displayFlightCount(value) {
-        const title = document.querySelector('.flight-board__title')
-        title.textContent = `Arrivals Board | ${value} of 33 Arrived`
+    updateFlight(flight) {
+        const oldFlightRow = Array.from(document.querySelectorAll('tr')).filter(row => row.children[0].textContent == flight.number)[0];
+
+        let newFlightRow = document.createElement('tr');
+        let newFlightRowHTML = `
+            <td>${flight.number}</td>
+            <td>${flight.origin}</td>
+            <td>${flight.destination}</td>
+            <td>${flight.departed}</td>
+            <td class="has-arrived">LANDED ${flight.arrived}</td>
+        `
+        newFlightRow.innerHTML = newFlightRowHTML;   
+        this.flightTable.replaceChild(newFlightRow, oldFlightRow)
+    }
+
+    displayArrivals(value) {
+        const arrivals = document.querySelector('.arrivals')
+        arrivals.textContent = `Arrivals | ${value} of 33 Arrived`
+    }
+
+    displayDepartures(value) {
+        const departures = document.querySelector('.departures')
+        departures.textContent = `Departures | ${value} of 33 Departed`
+        
     }
 
     displayFlightClock() {

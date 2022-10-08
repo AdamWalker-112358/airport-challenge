@@ -59,18 +59,31 @@ body {
     }
 
     .flight-table th:nth-child(1){
-        width: 160px;
+        width: 60px;
     }
 
     .flight-table th:nth-child(2){
         width: 160px;
     }
     .flight-table th:nth-child(3){
-        width: 360px;
+        width: 160px;
     }
     .flight-table th:nth-child(4){
         width: 360px;
     }
+    .flight-table th:nth-child(5){
+        width: 360px;
+    }
+
+    .has-not-arrived {
+        color: red;
+    }
+
+    .has-arrived {
+        color: green;
+    }
+
+
     
     
 
