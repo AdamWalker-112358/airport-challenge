@@ -14,7 +14,7 @@ export default class FlightTower {
     }
 
     dispatchFlights() {
-
+        // Add delay so that flights are gradually added to the flight board
         const delay = (delta) => {
             return new Promise(resolve => setTimeout(resolve, delta))
         }
