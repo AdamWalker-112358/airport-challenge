@@ -14,27 +14,39 @@ export default class FlightTower {
     }
 
     dispatchFlights() {
-        for (let flightData of flightsData.flights) {
-            let flight = new Flight({ number: flightData.number, origin: flightData.origin, destination: flightData.destination })
-            
-            // Setup event handlers
-            flight.on('scheduled', flight => {
-                this.flightBoard.postFlight(flight)
-            })
 
-            flight.on('depart', event => {
-                this.flightBoard.displayDepartures(this.departedCount)
-                this.flightBoard.updateFlight(event,'in-flight')
-            })
-            flight.on('arrive', (event) => {
-                this.flightBoard.displayArrivals(this.arrivedCount)
-                this.flightBoard.updateFlight(event,'landed')
-            })
-
-            // Dispatch flight
-            flight.depart();
-            this.flights.push(flight)  
+        const delay = (delta) => {
+            return new Promise(resolve => setTimeout(resolve, delta))
         }
+
+        const dispatch = async () => { 
+            for (let flightData of flightsData.flights) {
+                
+                await delay(100);
+                let flight = new Flight({ number: flightData.number, origin: flightData.origin, destination: flightData.destination })
+                
+                // Setup event handlers
+                flight.on('scheduled', flight => {
+                    this.flightBoard.postFlight(flight)
+                })
+    
+                flight.on('depart', event => {
+                    this.flightBoard.displayDepartures(this.departedCount)
+                    this.flightBoard.updateFlight(event,'in-flight')
+                })
+                flight.on('arrive', (event) => {
+                    this.flightBoard.displayArrivals(this.arrivedCount)
+                    this.flightBoard.updateFlight(event,'landed')
+                })
+    
+                // Dispatch flight
+                flight.depart();
+                this.flights.push(flight)  
+            }
+        }
+
+        dispatch();
+        
 
     }
 
