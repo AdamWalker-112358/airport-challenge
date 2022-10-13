@@ -26,12 +26,6 @@
     { "number": 509, "origin": "BER", "destination": "BCN" },
     { "number": 203, "origin": "BOM", "destination": "SYD" },
     { "number": 998, "origin": "BER", "destination": "BCN" },
-    { "number": 703, "origin": "LGW", "destination": "SYD" },
-    { "number": 513, "origin": "SYD", "destination": "BOM" },
-    { "number": 646, "origin": "LGW", "destination": "BCN" },
-    { "number": 279, "origin": "BCN", "destination": "BER" },
-    { "number": 533, "origin": "TLV", "destination": "BOM" },
-    { "number": 553, "origin": "TLV", "destination": "PEK" },
     { "number": 308, "origin": "PEK", "destination": "LAX" }
   ]
 }

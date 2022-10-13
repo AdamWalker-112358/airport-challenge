@@ -73,13 +73,19 @@ body {
     }
     .flight-table th:nth-child(5){
         width: 360px;
+        font-weight: 800;
     }
 
-    .has-not-arrived {
+    .scheduled {
+        color: orange;
+    }
+
+    .in-flight {
         color: red;
+        animation: 'blink' 1500ms ease-in-out infinite ;
     }
 
-    .has-arrived {
+    .landed {
         color: green;
     }
 
@@ -94,5 +100,14 @@ body {
         justify-content: center;
         align-items: center;
     
+    }
+}
+
+@keyframes blink {
+    0% {
+        color: transparent;
+    }
+    20% {
+        color: red;
     }
 }

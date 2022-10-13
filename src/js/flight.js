@@ -5,64 +5,71 @@ import { EventEmitter } from 'events';
 export default class Flight extends EventEmitter  {
     #departed = null;
     #arrived = null;
-    _number = 0;
-    _origin = 0;
-    _destination = '';
+    #number = null;
+    #origin = null;
+    #destination = null;
     
     constructor({ number, origin, destination }) {
         super();
-        this.number = number;
-        this.origin = origin;
-        this.destination = destination;
+        this.#number = number;
+        this.#origin = origin;
+        this.#destination = destination;
     }
 
-    set number(value) {
-        if ( Number.isNaN(Number(value)) ) throw new Error("Flight number can only contain numeric values");
-        this._number = value;
-    }
+    // Getters and setters
+    set number(value) {throw new Error("Number is ReadOnly")}
+    get number() {return this.#number;}
 
-    get number() {
-        return this._number;
-    }
+    set origin(value) { throw new Error("Origin is ReadOnly")}
+    get origin() {return this.#origin;}
 
-    set origin(value) {
-        this._origin = value;
-    }
+    set destination(value) {throw new Error("Destination is ReadOnly")}
+    get destination() { return this.#destination; }
+    
+    get departed() { return this.#departed }
+    set departed(value) { throw new Error("Departed is ReadOnly") }
+    
+    get arrived() { return this.#arrived }
+    set arrived(value){throw new Error("Arrived is ReadOnly")}
 
-    get origin() {
-        return this._origin;
-    }
-
-    set destination(value) {
-        this._destination = value;
-    }
-
-    get destination() {
-        return this._destination;
-    }
 
     depart() {
+
+        // Schedule random departure time
+        let randomDelay = Math.random() * 8000 + 5000;
+        let scheduledDepartureTime = dayjs().add(randomDelay, 'milliseconds').format("DD/MM/YYYY, HH:mm:ss");
+        
+        this.#departed = scheduledDepartureTime;
+        this.#arrived = 'SCHEDULED';
+
+        this.emit('scheduled',this)
+
+        // Depart at scheduled time and arrive at random time
         setTimeout(() => {
+            
             this.#departed = dayjs().format("DD/MM/YYYY, HH:mm:ss");
-            this.emit('depart', {number: this.number,origin: this.origin, destination: this.destination, departed: this.#departed, arrived: 'In Flight'})
+            this.#arrived = 'IN FLIGHT'
+            this.emit('depart', this)
+
             setTimeout(() => {
                 this.#arrive();
             }, Math.random() * 8000 + 5000)
-        }, Math.random() * 8000 + 5000)
+        }, randomDelay)
 
     }
 
     #arrive() {
-        this.#arrived = dayjs().format("DD/MM/YYYY, HH:mm:ss");
-        this.emit('arrive', {number: this.number,origin: this.origin, destination: this.destination, departed: this.#departed, arrived: this.#arrived})
+        let arrivalTime = dayjs().format("DD/MM/YYYY, HH:mm:ss");
+        this.#arrived = `LANDED ${arrivalTime}`;
+        this.emit('arrive', this);
     }
 
     hasArrived() {
-        return !!this.#arrived;
+        return !['SCHEDULED', 'IN FLIGHT'].includes(this.#arrived);
     }
 
     hasDeparted() {
-        return !!this.#departed;
+        return !['SCHEDULED'].includes(this.#arrived);
     }
 
 

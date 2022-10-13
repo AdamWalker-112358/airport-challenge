@@ -6,49 +6,57 @@ import flightsData from '../flights-data.json';
 
 export default class FlightTower {
 
-    flights = [];
+    flights = new Array();
 
     constructor() {
         
-        const flightBoard = document.querySelector('.flight-board')
-        this.flightBoard = new FlightBoard(flightBoard, this);
-        this.flightBoard.displayFlightClock();
-
+        this.flightBoard = new FlightBoard();
     }
 
     dispatchFlights() {
         for (let flightData of flightsData.flights) {
             let flight = new Flight({ number: flightData.number, origin: flightData.origin, destination: flightData.destination })
-            flight.depart()
-            flight.on('depart', (event => {
-                this.flightBoard.displayDepartures(this.departedCount)
-                this.flightBoard.postFlight(event)
-                // this.flightBoard.updateFlight(event)
-            }))
-            flight.on('arrive', (event) => {
-                // this.flightBoard.postFlight(event)
-                this.flightBoard.displayArrivals(this.arrivedCount)
-                this.flightBoard.updateFlight(event)
+            
+            // Setup event handlers
+            flight.on('scheduled', flight => {
+                this.flightBoard.postFlight(flight)
             })
+
+            flight.on('depart', event => {
+                this.flightBoard.displayDepartures(this.departedCount)
+                this.flightBoard.updateFlight(event,'in-flight')
+            })
+            flight.on('arrive', (event) => {
+                this.flightBoard.displayArrivals(this.arrivedCount)
+                this.flightBoard.updateFlight(event,'landed')
+            })
+
+            // Dispatch flight
+            flight.depart();
             this.flights.push(flight)  
         }
 
     }
 
-    get count() {
-        return this.flights.length;
-    }
 
+    // Get the number of flights
+    get count() { return this.flights.length; }
+    set count(value) {throw new Error('Count is ReadOnly')}   
+
+    // Get the number of flights that have arrived
     get arrivedCount() {
         return this.flights.filter(flight => flight.hasArrived()).length
     }
-
+    
+    // Get the number of flights that have departed
     get departedCount() {
         return this.flights.filter(flight => flight.hasDeparted()).length
     }
 
-
+    // Get Unique Destinations
     get destinations() {
+
+        // Create an object that keeps count of the number of times each destination appears
         let destinationCount = this.flights
             .map(flight => flight.destination)
             .reduce((flightCount, flight) => {
@@ -56,10 +64,9 @@ export default class FlightTower {
                 else flightCount[flight] = 1;
                 return flightCount;
             }, {});
-
-
+        
+        // The object keys are the unique destinations
         return Object.keys(destinationCount)
-
     }
 }
 
