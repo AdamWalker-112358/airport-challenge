@@ -56,22 +56,22 @@ flightClockSection = document.querySelector('.flight-clock');
     
     displayArrivals(value) {
         const arrivals = document.querySelector('.arrivals')
-        arrivals.textContent = `Arrivals | ${value} of 27 Arrived`
+        arrivals.textContent = `Arrivals 🛬 | ${value} of 27 Arrived`
     }
 
     displayDepartures(value) {
         const departures = document.querySelector('.departures')
-        departures.textContent = `Departures | ${value} of 27 Departed`
+        departures.textContent = `Departures 🛫 | ${value} of 27 Departed`
         
     }
 
     displayFlightClock() {
         let timestamp = dayjs().format('dddd, Do MMMM YYYY | HH:mm:ss');
-        this.flightClockSection.textContent = timestamp;  
+        this.flightClockSection.textContent = `⏰ ${timestamp}`;  
 
         setInterval( ()=> {
             let timestamp = dayjs().format('dddd, Do MMMM YYYY | HH:mm:ss');
-            this.flightClockSection.textContent = timestamp;  
+            this.flightClockSection.textContent = `⏰ ${timestamp}`;  
         }, 1000)
     }
 }

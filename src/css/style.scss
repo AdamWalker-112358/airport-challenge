@@ -2,95 +2,57 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    // background-color: rgba(255, 0, 0, 0.075);
 }
 
 body {
-    padding: 20px;
-
+    width: 100%;
+    padding: 20px 20px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
 
-    font-family: 'Courier New', Courier, monospace;
+    overflow: scroll;
+
+    .flight-data {
+
+        display: flex;
+        gap: 10px;
+
+        .departures, .arrivals {
+            padding: 5px 10px;
+            width: max-content;
+            border-radius: 4px;
+    
+            background-color: chocolate;
+            color: white;
+    
+            
+            text-align: center;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    }
+
+
 
     .flight-clock {
-        font-weight: 800;
-    }
-
-    h1 {
-        padding: 5px 20px;
-        width: max-content;
-        border-radius: 5px;
-
-        background-color: chocolate;
-        color: white;
-
-        text-align: center;
-    }
-
-    section.flight-clock {
         display: grid;
         place-items: center;
 
-        color: orange;
+        color: #d2691e;
         font-size: 40px;
-    }
-
-    td {
-        padding: 5px;
-        border: 1px solid black;
-        background: black;
-        color: white;
-    }
-
-    th {
-        min-width: 50px;
-        padding: 5px;
-        border: 1px solid black;
-
-    }
-
-    .flight-table th {
-        text-align: left;
-        background-color:chocolate;
-        color: white;
-    }
-
-    .flight-table th:nth-child(1){
-        width: 60px;
-    }
-
-    .flight-table th:nth-child(2){
-        width: 160px;
-    }
-    .flight-table th:nth-child(3){
-        width: 160px;
-    }
-    .flight-table th:nth-child(4){
-        width: 360px;
-    }
-    .flight-table th:nth-child(5){
-        width: 360px;
         font-weight: 800;
+        overflow: scroll;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
-
-    .scheduled {
-        color: orange;
-    }
-
-    .in-flight {
-        color: red;
-        animation: 'blink' 1500ms ease-in-out infinite ;
-    }
-
-    .landed {
-        color: green;
-    }
-
-
-    
     
 
     .flight-board {
@@ -99,15 +61,62 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        td {
+            padding: 5px;
+            border: 1px solid black;
+            
+            background: black;
+            color: white;
+        }
+
+        th {
+            min-width: 50px;
+            padding: 5px;
+            border: 1px solid black;
+
+            background-color:chocolate;
+            color: white;
+
+            text-align: left;
+        }
+
+        // Set column widths for the table
+        .flight-table th:nth-child(1){
+            width: 60px;
+        }
+
+        .flight-table th:nth-child(2), .flight-table th:nth-child(3){
+            width: 160px;
+        }
     
+        .flight-table th:nth-child(4), .flight-table th:nth-child(5){
+            width: 360px;
+        }
+
+        // Set colors for flight states
+        .scheduled {
+            color: orange;
+        }
+
+        .in-flight {
+            color: rgb(249, 74, 74);
+            animation: 'blink' 1500ms ease-in-out infinite ;
+        }
+
+        .landed {
+            color: rgb(76, 246, 76);
+        }
+
+        @keyframes blink {
+            0% {
+                color: transparent;
+            }
+            20% {
+                color: rgb(249, 74, 74);;
+            }
+        }
+
     }
 }
 
-@keyframes blink {
-    0% {
-        color: transparent;
-    }
-    20% {
-        color: red;
-    }
-}
