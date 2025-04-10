@@ -44,9 +44,13 @@ export default class Flight extends EventEmitter {
         this.#originalDepartureTime = dayjs().add(randomDelay, 'milliseconds').format("DD/MM/YYYY, HH:mm:ss");
         
         // Randomly decide if the flight will be delayed
-        if (Math.random() < 0.3) { // 30% chance of delay
+        static #DELAY_PROBABILITY = 0.3;
+        static #MAX_DELAY_DURATION = 10000;
+
+        // In depart() method:
+        if (Math.random() < Flight.#DELAY_PROBABILITY) {
             this.#delayReason = this.#getRandomDelayReason();
-            randomDelay += Math.random() * 10000; // Add up to 10 seconds delay
+            randomDelay += Math.random() * Flight.#MAX_DELAY_DURATION;
         }
 
         this.#departed = this.#originalDepartureTime;
