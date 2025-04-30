@@ -64,7 +64,7 @@ export default class Flight extends EventEmitter  {
         this.emit('arrive', this);
     }
 
-    hasArrived() {
+    willArrive() {
         return !['SCHEDULED', 'IN FLIGHT'].includes(this.#arrived);
     }
 
