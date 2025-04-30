@@ -1,0 +1,7 @@
+
+[pr_description]
+custom_labels = ['Bug fix', 'Tests', 'Bug fix with tests', 'Enhancement', 'Documentation', 'Other']
+
+[pr_code_suggestions]
+extra_instructions = "Suggest breaking changes when they are identified and recommend publishing a Major version. A breaking change is when a public facing method, changes something in the interface. For example, Method name changes, a parameter is made required, a parameter name is changed, the parameter order is changed, a parameter is removed, the return object returns a different type or a subset of the expected properties"
+
