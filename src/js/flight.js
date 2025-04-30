@@ -8,6 +8,8 @@ export default class Flight extends EventEmitter  {
     #number = null;
     #origin = null;
     #destination = null;
+    #isDelayed = false;
+    #delayTime = null;
     
     constructor({ number, origin, destination }) {
         super();
@@ -32,17 +34,28 @@ export default class Flight extends EventEmitter  {
     get arrived() { return this.#arrived }
     set arrived(value){throw new Error("Arrived is ReadOnly")}
 
+    get isDelayed() { return this.#isDelayed }
+    get delayTime() { return this.#delayTime }
+
 
     depart() {
-
-        // Schedule random departure time
+        // Base delay for all flights
         let randomDelay = Math.random() * 8000 + 5000;
+        
+        // Randomly select flights for additional delay (20% chance)
+        if (Math.random() < 0.2) {
+            this.#isDelayed = true;
+            // Additional delay between 5-15 seconds
+            this.#delayTime = Math.floor(Math.random() * 10000 + 5000);
+            randomDelay += this.#delayTime;
+        }
+
         let scheduledDepartureTime = dayjs().add(randomDelay, 'milliseconds').format("DD/MM/YYYY, HH:mm:ss");
         
         this.#departed = scheduledDepartureTime;
         this.#arrived = 'SCHEDULED';
 
-        this.emit('scheduled',this)
+        this.emit('scheduled', this)
 
         // Depart at scheduled time and arrive at random time
         setTimeout(() => {
