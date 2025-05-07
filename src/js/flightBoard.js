@@ -17,7 +17,7 @@ flightClockSection = document.querySelector('.flight-clock');
         this.flightBoardSection.append(this.flightTable);
   
         this.flightTableHeader = document.createElement('tr')
-        this.flightTableHeader.innerHTML = `<th class="id">ID</th><th class="origin">Origin</th><th class="destination">Destination</th><th class="departed">Departed</th><th class="arrived">Arrived</th>`
+        this.flightTableHeader.innerHTML = `<th class="id">ID</th><th class="origin">Origin</th><th class="destination">Destination</th><th class="departed">Departed</th><th class="arrived">Arrived</th><th class="status">Status</th>`
         this.flightTable.append(this.flightTableHeader);
 
     }
@@ -25,21 +25,31 @@ flightClockSection = document.querySelector('.flight-clock');
     // Add a row to table with flight details
     postFlight = (flight) => {
         let flightRow = document.createElement('tr');
+        let statusText = flight.isDelayed ? 
+            `Delayed by ${Math.floor(flight.delayTime/1000)} seconds` : 
+            'On Time';
+        let statusClass = flight.isDelayed ? 'delayed' : 'on-time';
+        
         let flightRowHTML = `
             <td>${flight.number}</td>
             <td>${flight.origin}</td>
             <td>${flight.destination}</td>
             <td>${flight.departed}</td>
             <td class="scheduled">${flight.arrived}</td>
+            <td class="${statusClass}">${statusText}</td>
         `
         flightRow.innerHTML = flightRowHTML;   
         this.flightTable.append(flightRow);
-
     }
 
     // Update an existing row with flight details (based on flight number), and pass a CSS class for styling the state
     updateFlight(flight, stateClass) {
         const oldFlightRow = Array.from(document.querySelectorAll('tr')).filter(row => row.children[0].textContent == flight.number)[0];
+
+        let statusText = flight.isDelayed ? 
+            `Delayed by ${Math.floor(flight.delayTime/1000)} seconds` : 
+            'On Time';
+        let statusClass = flight.isDelayed ? 'delayed' : 'on-time';
 
         let newFlightRow = document.createElement('tr');
         let newFlightRowHTML = `
@@ -48,6 +58,7 @@ flightClockSection = document.querySelector('.flight-clock');
             <td>${flight.destination}</td>
             <td>${flight.departed}</td>
             <td class="${stateClass}">${flight.arrived}</td>
+            <td class="${statusClass}">${statusText}</td>
         `
         newFlightRow.innerHTML = newFlightRowHTML;   
         this.flightTable.replaceChild(newFlightRow, oldFlightRow)

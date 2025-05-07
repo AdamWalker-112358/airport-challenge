@@ -1,0 +1,15 @@
+/* Add these to your existing CSS */
+.delayed {
+    color: #ff4444;
+    font-weight: bold;
+}
+
+.on-time {
+    color: #44aa44;
+}
+
+/* Make status column a bit wider to accommodate delay text */
+.flight-table th:last-child,
+.flight-table td:last-child {
+    min-width: 150px;
+}
