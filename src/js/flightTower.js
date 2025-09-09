@@ -11,6 +11,15 @@ export default class FlightTower {
     constructor() {
         
         this.flightBoard = new FlightBoard();
+        this.airlineMap = this.createAirlineMap();
+    }
+
+    createAirlineMap() {
+        const airlineMap = {};
+        flightsData.airlines.forEach(airline => {
+            airlineMap[airline.code] = airline.name;
+        });
+        return airlineMap;
     }
 
     dispatchFlights() {
@@ -23,7 +32,12 @@ export default class FlightTower {
             for (let flightData of flightsData.flights) {
                 
                 await delay(100);
-                let flight = new Flight({ number: flightData.number, origin: flightData.origin, destination: flightData.destination })
+                let flight = new Flight({ 
+                    number: flightData.number, 
+                    origin: flightData.origin, 
+                    destination: flightData.destination,
+                    airline: this.airlineMap[flightData.airline]
+                })
                 
                 // Setup event handlers
                 flight.on('scheduled', flight => {

@@ -17,7 +17,7 @@ flightClockSection = document.querySelector('.flight-clock');
         this.flightBoardSection.append(this.flightTable);
   
         this.flightTableHeader = document.createElement('tr')
-        this.flightTableHeader.innerHTML = `<th class="id">ID</th><th class="origin">Origin</th><th class="destination">Destination</th><th class="departed">Departed</th><th class="arrived">Arrived</th>`
+        this.flightTableHeader.innerHTML = `<th class="id">ID</th><th class="airline">Airline</th><th class="origin">Origin</th><th class="destination">Destination</th><th class="departed">Departed</th><th class="arrived">Arrived</th>`
         this.flightTable.append(this.flightTableHeader);
 
     }
@@ -27,6 +27,7 @@ flightClockSection = document.querySelector('.flight-clock');
         let flightRow = document.createElement('tr');
         let flightRowHTML = `
             <td>${flight.number}</td>
+            <td>${flight.airline}</td>
             <td>${flight.origin}</td>
             <td>${flight.destination}</td>
             <td>${flight.departed}</td>
@@ -44,6 +45,7 @@ flightClockSection = document.querySelector('.flight-clock');
         let newFlightRow = document.createElement('tr');
         let newFlightRowHTML = `
             <td>${flight.number}</td>
+            <td>${flight.airline}</td>
             <td>${flight.origin}</td>
             <td>${flight.destination}</td>
             <td>${flight.departed}</td>
