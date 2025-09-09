@@ -86,11 +86,15 @@ body {
             width: 60px;
         }
 
-        .flight-table th:nth-child(2), .flight-table th:nth-child(3){
+        .flight-table th:nth-child(2){
+            width: 180px;
+        }
+
+        .flight-table th:nth-child(3), .flight-table th:nth-child(4){
             width: 160px;
         }
     
-        .flight-table th:nth-child(4), .flight-table th:nth-child(5){
+        .flight-table th:nth-child(5), .flight-table th:nth-child(6){
             width: 360px;
         }
 

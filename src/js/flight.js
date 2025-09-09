@@ -8,12 +8,14 @@ export default class Flight extends EventEmitter  {
     #number = null;
     #origin = null;
     #destination = null;
+    #airline = null;
     
-    constructor({ number, origin, destination }) {
+    constructor({ number, origin, destination, airline }) {
         super();
         this.#number = number;
         this.#origin = origin;
         this.#destination = destination;
+        this.#airline = airline;
     }
 
     // Getters and setters
@@ -25,6 +27,9 @@ export default class Flight extends EventEmitter  {
 
     set destination(value) {throw new Error("Destination is ReadOnly")}
     get destination() { return this.#destination; }
+
+    set airline(value) { throw new Error("Airline is ReadOnly") }
+    get airline() { return this.#airline; }
     
     get departed() { return this.#departed }
     set departed(value) { throw new Error("Departed is ReadOnly") }
