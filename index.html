@@ -16,6 +16,16 @@
         <h1 class="departures"> Departures 🛫  |  0 of 27 Departed</h1>
         <h1 class="arrivals"> Arrivals 🛬  | 0 of 27 Arrived</h1>
     </hgroup>
+    <section class="board-controls">
+        <input type="search" class="flight-search" placeholder="Search flight, origin or destination">
+        <select class="status-filter">
+            <option value="all">All statuses</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="inflight">In flight</option>
+            <option value="landed">Landed</option>
+        </select>
+    </section>
+    <p class="filter-empty" hidden></p>
     <section class="flight-board"></section>
 </body>
 </html>
