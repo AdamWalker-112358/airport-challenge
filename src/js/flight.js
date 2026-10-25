@@ -8,6 +8,7 @@ export default class Flight extends EventEmitter  {
     #number = null;
     #origin = null;
     #destination = null;
+    #gate = null;
     
     constructor({ number, origin, destination }) {
         super();
@@ -31,6 +32,14 @@ export default class Flight extends EventEmitter  {
     
     get arrived() { return this.#arrived }
     set arrived(value){throw new Error("Arrived is ReadOnly")}
+
+    get gate() { return this.#gate }
+    set gate(value) { throw new Error("Gate is ReadOnly") }
+
+    assignGate(gate) {
+        this.#gate = gate;
+        this.emit('gate', this);
+    }
 
 
     depart() {

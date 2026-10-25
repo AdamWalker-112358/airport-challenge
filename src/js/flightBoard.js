@@ -17,7 +17,7 @@ flightClockSection = document.querySelector('.flight-clock');
         this.flightBoardSection.append(this.flightTable);
   
         this.flightTableHeader = document.createElement('tr')
-        this.flightTableHeader.innerHTML = `<th class="id">ID</th><th class="origin">Origin</th><th class="destination">Destination</th><th class="departed">Departed</th><th class="arrived">Arrived</th>`
+        this.flightTableHeader.innerHTML = `<th class="id">ID</th><th class="origin">Origin</th><th class="destination">Destination</th><th class="gate">Gate</th><th class="departed">Departed</th><th class="arrived">Arrived</th>`
         this.flightTable.append(this.flightTableHeader);
 
     }
@@ -29,6 +29,7 @@ flightClockSection = document.querySelector('.flight-clock');
             <td>${flight.number}</td>
             <td>${flight.origin}</td>
             <td>${flight.destination}</td>
+            <td>${flight.gate ?? 'TBA'}</td>
             <td>${flight.departed}</td>
             <td class="scheduled">${flight.arrived}</td>
         `
@@ -46,11 +47,18 @@ flightClockSection = document.querySelector('.flight-clock');
             <td>${flight.number}</td>
             <td>${flight.origin}</td>
             <td>${flight.destination}</td>
+            <td>${flight.gate ?? 'TBA'}</td>
             <td>${flight.departed}</td>
             <td class="${stateClass}">${flight.arrived}</td>
         `
         newFlightRow.innerHTML = newFlightRowHTML;   
         this.flightTable.replaceChild(newFlightRow, oldFlightRow)
+    }
+
+    // Show a newly assigned gate on the flight's row
+    updateGate(flight) {
+        const row = Array.from(this.flightTable.rows).find(row => row.children[0].textContent == flight.number);
+        if (row) row.children[3].textContent = flight.gate;
     }
 
     
