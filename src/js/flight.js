@@ -8,6 +8,7 @@ export default class Flight extends EventEmitter  {
     #number = null;
     #origin = null;
     #destination = null;
+    #scheduledAt = null;
     
     constructor({ number, origin, destination }) {
         super();
@@ -32,6 +33,9 @@ export default class Flight extends EventEmitter  {
     get arrived() { return this.#arrived }
     set arrived(value){throw new Error("Arrived is ReadOnly")}
 
+    // Scheduled departure time in epoch milliseconds
+    get scheduledAt() { return this.#scheduledAt }
+
 
     depart() {
 
@@ -41,6 +45,7 @@ export default class Flight extends EventEmitter  {
         
         this.#departed = scheduledDepartureTime;
         this.#arrived = 'SCHEDULED';
+        this.#scheduledAt = Date.now() + randomDelay;
 
         this.emit('scheduled',this)
 
