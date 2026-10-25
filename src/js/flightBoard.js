@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat'; dayjs.extend(advancedFormat);
+import { startCountdown } from './departureCountdown';
 
 export default class FlightBoard {
 
@@ -35,6 +36,14 @@ flightClockSection = document.querySelector('.flight-clock');
         flightRow.innerHTML = flightRowHTML;   
         this.flightTable.append(flightRow);
 
+        // Count down to departure in the status cell
+        startCountdown(flight, this.findStatusCell);
+    }
+
+    // Find the status cell on a flight's current row
+    findStatusCell = (flight) => {
+        const row = Array.from(this.flightTable.rows).find(row => row.textContent.includes(flight.number));
+        return row && row.lastElementChild;
     }
 
     // Update an existing row with flight details (based on flight number), and pass a CSS class for styling the state
