@@ -42,6 +42,14 @@ body {
 
 
 
+    .flight-stats {
+        display: flex;
+        gap: 20px;
+
+        color: chocolate;
+        font-weight: 600;
+    }
+
     .flight-clock {
         display: grid;
         place-items: center;

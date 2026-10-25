@@ -1,5 +1,6 @@
 import Flight from './flight';
 import FlightBoard from './flightBoard';
+import FlightStats from './flightStats';
 
 import flightsData from '../flights-data.json';
 
@@ -11,6 +12,7 @@ export default class FlightTower {
     constructor() {
         
         this.flightBoard = new FlightBoard();
+        this.stats = new FlightStats(this);
     }
 
     dispatchFlights() {
@@ -42,6 +44,7 @@ export default class FlightTower {
                 // Dispatch flight
                 flight.depart();
                 this.flights.push(flight)  
+                this.stats.start()
             }
         }
 

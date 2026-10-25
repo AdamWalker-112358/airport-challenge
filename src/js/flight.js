@@ -68,6 +68,10 @@ export default class Flight extends EventEmitter  {
         return !['SCHEDULED', 'IN FLIGHT'].includes(this.#arrived);
     }
 
+    hasArrived() {
+        return this.#arrived.startsWith('LANDED');
+    }
+
     hasDeparted() {
         return !['SCHEDULED'].includes(this.#arrived);
     }
