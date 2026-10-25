@@ -42,6 +42,25 @@ body {
 
 
 
+    .board-controls {
+        display: flex;
+        gap: 10px;
+
+        .flight-search, .status-filter {
+            padding: 5px 10px;
+            border: 1px solid chocolate;
+            border-radius: 4px;
+        }
+
+        .flight-search {
+            width: 320px;
+        }
+    }
+
+    .filter-empty {
+        color: chocolate;
+    }
+
     .flight-clock {
         display: grid;
         place-items: center;

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat'; dayjs.extend(advancedFormat);
+import FlightFilter from './flightFilter';
 
 export default class FlightBoard {
 
@@ -20,6 +21,8 @@ flightClockSection = document.querySelector('.flight-clock');
         this.flightTableHeader.innerHTML = `<th class="id">ID</th><th class="origin">Origin</th><th class="destination">Destination</th><th class="departed">Departed</th><th class="arrived">Arrived</th>`
         this.flightTable.append(this.flightTableHeader);
 
+        // Filter rows from the search box and status dropdown
+        this.filter = new FlightFilter(this.flightTable);
     }
 
     // Add a row to table with flight details
@@ -34,7 +37,7 @@ flightClockSection = document.querySelector('.flight-clock');
         `
         flightRow.innerHTML = flightRowHTML;   
         this.flightTable.append(flightRow);
-
+        this.filter.apply();
     }
 
     // Update an existing row with flight details (based on flight number), and pass a CSS class for styling the state
