@@ -1,5 +1,6 @@
 import Flight from './flight';
 import FlightBoard from './flightBoard';
+import GateManager from './gateManager';
 
 import flightsData from '../flights-data.json';
 
@@ -11,6 +12,7 @@ export default class FlightTower {
     constructor() {
         
         this.flightBoard = new FlightBoard();
+        this.gates = new GateManager('A', 8);
     }
 
     dispatchFlights() {
@@ -28,6 +30,12 @@ export default class FlightTower {
                 // Setup event handlers
                 flight.on('scheduled', flight => {
                     this.flightBoard.postFlight(flight)
+                    this.gates.request(flight)
+                })
+
+                // A queued flight was given a gate that just freed up
+                flight.on('gate', flight => {
+                    this.flightBoard.updateGate(flight)
                 })
     
                 flight.on('depart', event => {
@@ -35,6 +43,7 @@ export default class FlightTower {
                     this.flightBoard.updateFlight(event,'in-flight')
                 })
                 flight.on('arrive', (event) => {
+                    this.gates.release(event)
                     this.flightBoard.displayArrivals(this.arrivedCount)
                     this.flightBoard.updateFlight(event,'landed')
                 })
